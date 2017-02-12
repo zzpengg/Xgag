@@ -204,6 +204,10 @@ $(function(){
       status: status
     }, function (result) {
       // clean input
+      result = JSON.parse(JSON.stringify(result));
+      if(result.code != 200){
+        return alert(result.message);
+      }
       node.find('input[name=comment]').val('');
       $("#"+postId+" > div.comment-box > div.comment-area").text('');
       getCommentsAjax(postId);

@@ -25,14 +25,6 @@ module.exports = {
 
     var id = req.params["id"];
 
-    if ( ! req.session.user) {
-      var error = {
-        code: 300,
-        message: "please login"
-      }
-      return res.render('index.jade', { title: 'Xgag', error: error});
-    }
-
     if (! id) {
       return res.json({
         code: 500,
@@ -57,21 +49,22 @@ module.exports = {
     });
   },
   addcomment: function(req, res){
-    var date = new Date();
-    var id = req.params["id"].replace(/id=/g, "");
-    console.log(req.session.user);
-    var newComment = new models.comment;
 
-    newComment.user = req.session.user.id;
-    newComment.create_date = date;
-    newComment.message = req.body.message;
-    newComment.status = req.body.status;
-    if ( ! req.session.user || typeof req.session.user==undefined) {
+    if ( ! req.session.user) {
       return res.json({
         code: 300,
         message: "please login"
       });
     }
+
+    var date = new Date();
+    var id = req.params["id"].replace(/id=/g, "");
+
+    var newComment = new models.comment;
+    newComment.user = req.session.user.id;
+    newComment.create_date = date;
+    newComment.message = req.body.message;
+    newComment.status = req.body.status;
 
     if (! id) {
       return res.json({
