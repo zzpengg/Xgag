@@ -71,13 +71,17 @@ block content
                             i.fa.fa-thumbs-o-down
                             span.dislike #{posts.dislike.length}
                     .comment-box
-                      .comment-area
-                      .comment-body
-                        form.comment-form(action="/comment/add/#{posts._id}" role="form")
-                          .form-group
-                            input(type="text" class="form-control" name="comment" placeholder="評論..." value="")
-                            input(type="hidden" name="status" value="")
-                            input(type="hidden" name="post_id" value="#{posts._id}")  
+                      .comment-area                      
+                      if !user
+                        .content-text
+                          |留言請登入
+                      else           
+                        .comment-body             
+                          form.comment-form(action="/comment/add/#{posts._id}" role="form")
+                            .form-group
+                              input(type="text" class="form-control" name="comment" placeholder="評論..." value="")
+                              input(type="hidden" name="status" value="")
+                              input(type="hidden" name="post_id" value="#{posts._id}")  
 
 
       .col-md-4(style="margin-top: 80px;")
